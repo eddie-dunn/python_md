@@ -1,5 +1,8 @@
 *.py[cod]
 
+# Ignore docs folder
+docs/
+
 # C extensions
 *.so
 
