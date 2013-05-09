@@ -1,30 +1,33 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import shutil
 import markdown
 import argparse
-
+import io
 
 # Default options you may configure
 SRCPATH = "."
 DESTINATION = "docs"
-MD_EXTENSION = [".md", ".markdown"]
+MD_EXTENSIONS = [".md", ".markdown"]
 EXTRAS = [".jpg", ".png", ".css"]
 
 CSS_FILE = 'markdown.css'
-CSS_STYLE = '<link href="%s" rel="stylesheet"></link>' % CSS_FILE
 # More styles to be found here:
 # https://github.com/jasonm23/markdown-css-themes
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Generate HTML from md.')
+    parser = argparse.ArgumentParser(description='Generate HTML from markdown\
+        documents.')
     parser.add_argument('-d', '--dest', default=DESTINATION,
-                        help="destination folder for generated documentation")
+                        help="Destination folder for generated documentation,\
+                         defaults to '%s'." % DESTINATION)
     parser.add_argument('-s', '--src', default=SRCPATH,
-                        help="folder with markdown source files")
-
+                        help="Folder with markdown source files, defaults to\
+                        current dir.")
+    parser.add_argument('-c', '--css', default=CSS_FILE,
+                        help="The css file to use for the generated docs.")
     return parser.parse_args()
 
 
@@ -33,42 +36,47 @@ def make_list(folder, extension_list):
             if f.endswith(extension)]
 
 
-def generate_markdown(destination):
-    md_files = make_list(SRCPATH, MD_EXTENSION)
-    for filename in md_files:
-        name, extension = os.path.splitext(filename)
-        output = destination + "/" + name + ".html"
+def generate_html(filename, source, destination, css):
+    name, _ = os.path.splitext(filename)
+    output_file = destination + "/" + name + ".html"
+    print("Generating ", filename, "--> ", output_file)
 
-        print "Generating ", filename, "--> ", output
-        markdown.markdownFromFile(input=filename, output=output,
-                                  extensions=['toc'])
-        # TODO Add flagged css injection for html files
-        # inject css inside head for correct html
-        with open(output, 'a') as infile:
-            infile.write(CSS_STYLE)
+    md_text = ""
+    with open(filename, 'r') as infile:
+        md_text = markdown.markdown(infile.read(), extensions=['toc'])
+
+    css_style = '<link href="%s" rel="stylesheet"></link>' % css
+    html = "<html>\n<body>\n{0}\n{1}</html>\n</body>".format(css_style,
+                                                             md_text)
+    with open(output_file, 'w') as outfile:
+        outfile.write(html)
 
 
 def copy_files(file_extensions, destination):
-    img_files = make_list(SRCPATH, file_extensions)
-    for filename in img_files:
+    extra_files = make_list(SRCPATH, file_extensions)
+    for filename in extra_files:
         output = destination + "/" + filename
-        print "Copying ", filename, "--> ", output
+        print("Copying ", filename, "--> ", output)
         shutil.copy2(filename, output)
 
 
 def main():
     args = parse_args()
 
+    source_path = args.src
     destination = args.dest
+    css = args.css
 
     # Make sure we have our destination folder ready
     if not os.path.exists(destination):
         os.makedirs(destination)
 
     # Generate markdown files
-    generate_markdown(destination)
+    md_files = make_list(source_path, MD_EXTENSIONS)
+    for filename in md_files:
+        generate_html(filename, source_path, destination, css)
 
-    # Add source extra source files to docs folder
+    # Add extra source files to docs folder
     copy_files(EXTRAS, destination)
 
 
