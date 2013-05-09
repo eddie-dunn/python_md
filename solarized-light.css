@@ -294,3 +294,16 @@ h6 {
   border-radius: 0.2em;
   foreground-color: #859900;
 }
+@media screen and (min-width: 600px) {
+    body {
+        max-width: 800px;
+        width: 55%;
+        min-width: 600px;
+        margin:auto auto 100px auto;
+    }
+}
+@media screen and (max-width: 600px) {
+    body {
+        margin:auto auto 100px auto;
+    }
+}
