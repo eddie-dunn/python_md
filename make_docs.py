@@ -4,7 +4,6 @@ import os
 import shutil
 import markdown
 import argparse
-import io
 
 # Default options you may configure
 SRCPATH = "."
