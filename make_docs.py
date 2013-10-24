@@ -17,16 +17,17 @@ CSS_FILE = 'markdown.css'
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Generate HTML from markdown\
-        documents.')
+    parser = argparse.ArgumentParser(description=('Generate HTML from markdown'
+        'documents.'))
     parser.add_argument('-d', '--dest', default=DESTINATION,
-                        help="Destination folder for generated documentation,\
-                         defaults to '%s'." % DESTINATION)
+                        help=("Destination folder for generated documentation,"
+                         "defaults to '%s'." % DESTINATION))
     parser.add_argument('-s', '--src', default=SRCPATH,
-                        help="Folder with markdown source files, defaults to\
-                        current dir.")
+                        help=("Folder with markdown source files, defaults to "
+                        "current dir."))
     parser.add_argument('-c', '--css', default=CSS_FILE,
-                        help="The css file to use for the generated docs.")
+                        help=("The css file to use for the generated docs, "
+                        "defaults to 'markdown.css'."))
     return parser.parse_args()
 
 
