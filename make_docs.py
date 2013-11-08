@@ -46,8 +46,7 @@ def generate_html(filename, source, destination, css):
         md_text = markdown.markdown(infile.read(), extensions=['toc'])
 
     css_style = '<link href="%s" rel="stylesheet"></link>' % css
-    html = "<html>\n<body>\n{0}\n{1}</html>\n</body>".format(css_style,
-                                                             md_text)
+    html = "<html>\n\n{0}\n{1}</html>\n".format(css_style, md_text)
     with open(output_file, 'w') as outfile:
         outfile.write(html)
 
