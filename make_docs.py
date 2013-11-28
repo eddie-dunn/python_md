@@ -70,11 +70,17 @@ def copy_files(file_extensions, source, destination):
 
 
 def main():
-    args = parse_args()
 
-    source_path = args.src
+    # Get args
+    args = parse_args()
     destination = args.dest
     css = args.css
+    source = args.src
+
+    # Make sure source folder exists
+    if not os.path.exists(source):
+        print "[ERROR] Source path does not exist. Did you spell it correctly?"
+        sys.exit(1)
 
     # Make sure we have our destination folder ready
     if not os.path.exists(destination):
@@ -85,8 +91,8 @@ def main():
     for filename in md_files:
         generate_html(filename, source_path, destination, css)
 
-    # Add extra source files to docs folder
-    copy_files(EXTRAS, destination)
+    # Add extra necessary source files to docs folder
+    copy_files(EXTRA_FILES, source, destination)
 
 
 if __name__ == '__main__':
