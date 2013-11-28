@@ -1,15 +1,23 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import os
+import sys
 import shutil
 import markdown
 import argparse
 
+
 # Default options you may configure
-SRCPATH = "."
+SRCPATH = "src"
 DESTINATION = "docs"
-MD_EXTENSIONS = [".md", ".markdown"]
-EXTRAS = [".jpg", ".png", ".css"]
+MD_FILES = [".md", ".markdown"]
+EXTRA_FILES = [".jpg", ".png", ".css"]
+
+GENERATE_MARKDOWN_EXTENSIONS = [
+    'toc',
+    'tables',
+    'codehilite(force_linenos=False,guess_lang=False)'
+]
 
 CSS_FILE = 'markdown.css'
 # More styles to be found here:
