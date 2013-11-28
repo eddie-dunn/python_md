@@ -61,14 +61,14 @@ def generate_html(filename, source, destination, css):
     with codecs.open(output_file, 'w', 'utf-8') as outfile:
         outfile.write(html)
 
-def copy_files(file_extensions, source, destination):
-    img_files = make_list(source, file_extensions)
-    for filename in img_files:
-        output_file = destination + "/" + filename
-        input_file = "%s/%s" % (source, filename)
 
-        print "Copying ", input_file, "--> ", output_file
-        shutil.copy2(input_file, output_file)
+def copy_files(file_extensions, source, destination):
+    extra_files = make_list(source, file_extensions)
+    for filename in extra_files:
+        filepath = "{}/{}".format(source, filename)
+        output = "{}/{}".format(destination, filename)
+        print("Copying ", filepath, "--> ", output)
+        shutil.copy2(filepath, output)
 
 
 def main():
