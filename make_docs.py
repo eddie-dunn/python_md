@@ -15,7 +15,7 @@ DESTINATION = "docs"
 MD_FILES = [".md", ".markdown"]
 EXTRA_FILES = [".jpg", ".png", ".css"]
 
-GENERATE_MARKDOWN_EXTENSIONS = [
+MARKDOWN_EXTENSIONS = [
     'toc',
     'tables',
     'codehilite(force_linenos=False,guess_lang=False)'
@@ -54,7 +54,8 @@ def generate_html(filename, source, destination, css):
     print("Generating ", filepath, "--> ", output_file)
     md_text = ""
     with codecs.open(filepath, 'r', 'utf-8') as infile:
-        md_text = markdown.markdown(infile.read(), extensions=['toc'])
+        md_text = markdown.markdown(
+            infile.read(), extensions=MARKDOWN_EXTENSIONS)
 
     css_style = '<link href="%s" rel="stylesheet"></link>' % css
     html = "<html>\n\n{0}\n{1}</html>\n".format(css_style, md_text)
