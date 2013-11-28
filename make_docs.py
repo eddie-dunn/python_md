@@ -32,7 +32,7 @@ def parse_args():
                          "defaults to '%s'." % DESTINATION))
     parser.add_argument('-s', '--src', default=SRCPATH,
                         help=("Folder with markdown source files, defaults to "
-                        "current dir."))
+                        "'%s'." % SRCPATH))
     parser.add_argument('-c', '--css', default=CSS_FILE,
                         help=("The css file to use for the generated docs, "
                         "defaults to 'markdown.css'."))
@@ -75,10 +75,10 @@ def main():
     args = parse_args()
     destination = args.dest
     css = args.css
-    source = args.src
+    source_path = args.src
 
     # Make sure source folder exists
-    if not os.path.exists(source):
+    if not os.path.exists(source_path):
         print "[ERROR] Source path does not exist. Did you spell it correctly?"
         sys.exit(1)
 
@@ -92,7 +92,7 @@ def main():
         generate_html(filename, source_path, destination, css)
 
     # Add extra necessary source files to docs folder
-    copy_files(EXTRA_FILES, source, destination)
+    copy_files(EXTRA_FILES, source_path, destination)
 
 
 if __name__ == '__main__':
