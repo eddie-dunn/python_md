@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import os
-import sys
 import shutil
 import markdown
 import argparse
-
+import codecs
 
 # Default options you may configure
 SRCPATH = "src"
@@ -45,18 +47,18 @@ def make_list(folder, extension_list):
 
 
 def generate_html(filename, source, destination, css):
-    name, _ = os.path.splitext(filename)
-    output_file = destination + "/" + name + ".html"
-    print("Generating ", filename, "--> ", output_file)
+    filepath = "{}/{}".format(source, filename)
 
+    name, _ = os.path.splitext(filename)
+    output_file = "{}/{}.html".format(destination, name)
+    print("Generating ", filepath, "--> ", output_file)
     md_text = ""
-    with open(filename, 'r') as infile:
-        md_text = markdown.markdown(infile.read(), extensions=['tables',
-                                                               'toc'])
+    with codecs.open(filepath, 'r', 'utf-8') as infile:
+        md_text = markdown.markdown(infile.read(), extensions=['toc'])
 
     css_style = '<link href="%s" rel="stylesheet"></link>' % css
     html = "<html>\n\n{0}\n{1}</html>\n".format(css_style, md_text)
-    with open(output_file, 'w') as outfile:
+    with codecs.open(output_file, 'w', 'utf-8') as outfile:
         outfile.write(html)
 
 def copy_files(file_extensions, source, destination):
@@ -70,17 +72,11 @@ def copy_files(file_extensions, source, destination):
 
 
 def main():
-
-    # Get args
     args = parse_args()
+
+    source_path = args.src
     destination = args.dest
     css = args.css
-    source_path = args.src
-
-    # Make sure source folder exists
-    if not os.path.exists(source_path):
-        print "[ERROR] Source path does not exist. Did you spell it correctly?"
-        sys.exit(1)
 
     # Make sure we have our destination folder ready
     if not os.path.exists(destination):
