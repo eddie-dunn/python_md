@@ -87,7 +87,7 @@ def main():
         os.makedirs(destination)
 
     # Generate markdown files
-    md_files = make_list(source_path, MD_EXTENSIONS)
+    md_files = make_list(source_path, MD_FILES)
     for filename in md_files:
         generate_html(filename, source_path, destination, css)
 
