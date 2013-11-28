@@ -43,7 +43,8 @@ def generate_html(filename, source, destination, css):
 
     md_text = ""
     with open(filename, 'r') as infile:
-        md_text = markdown.markdown(infile.read(), extensions=['toc'])
+        md_text = markdown.markdown(infile.read(), extensions=['tables',
+                                                               'toc'])
 
     css_style = '<link href="%s" rel="stylesheet"></link>' % css
     html = "<html>\n\n{0}\n{1}</html>\n".format(css_style, md_text)
