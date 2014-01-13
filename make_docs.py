@@ -5,9 +5,15 @@ from __future__ import unicode_literals
 
 import os
 import shutil
-import markdown
 import argparse
 import codecs
+
+try:
+    import markdown
+except ImportError as error:
+    print("[ERROR] You must install Python's markdown engine; on Debian-based "
+          "systems run 'apt-get install python-markdown'.\n")
+    raise
 
 # Default options you may configure
 SRCPATH = "src"
