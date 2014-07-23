@@ -24,7 +24,9 @@ EXTRA_FILES = [".jpg", ".png", ".css"]
 MARKDOWN_EXTENSIONS = [
     'toc',
     'tables',
-    'codehilite(force_linenos=False,guess_lang=False)'
+    'codehilite(force_linenos=False,guess_lang=False)',
+    'def_list',
+    'footnotes',
 ]
 
 CSS_FILE = 'markdown.css'
