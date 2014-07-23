@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""make_docs: Use it to convert a markdown project to HTML"""
 
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -35,6 +36,7 @@ CSS_FILE = 'markdown.css'
 
 
 def parse_args():
+    """Parse args"""
     parser = argparse.ArgumentParser(description=('Generate HTML from markdown'
         'documents.'))
     parser.add_argument('-d', '--dest', default=DESTINATION,
@@ -50,11 +52,13 @@ def parse_args():
 
 
 def make_list(folder, extension_list):
+    """Make a list of files matching extensions in `extension_list`."""
     return [f for f in os.listdir(folder) for extension in extension_list
             if f.endswith(extension)]
 
 
 def generate_html(filename, source, destination, css):
+    """Generate html"""
     filepath = "{}/{}".format(source, filename)
 
     name, _ = os.path.splitext(filename)
@@ -73,6 +77,7 @@ def generate_html(filename, source, destination, css):
 
 
 def copy_files(file_extensions, source, destination):
+    """Used to non-generated files from source to destination"""
     extra_files = make_list(source, file_extensions)
     for filename in extra_files:
         filepath = "{}/{}".format(source, filename)
@@ -82,6 +87,7 @@ def copy_files(file_extensions, source, destination):
 
 
 def main():
+    """Main method"""
     args = parse_args()
 
     source_path = args.src
