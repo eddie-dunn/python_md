@@ -64,7 +64,8 @@ def generate_html(filename, source, destination, css):
             infile.read(), extensions=MARKDOWN_EXTENSIONS)
 
     css_style = '<link href="%s" rel="stylesheet"></link>' % css
-    html = "<html>\n\n{0}\n{1}</html>\n".format(css_style, md_text)
+    html = ('<html>\n<meta charset="UTF-8">\n{0}\n{1}'
+            '</html>\n').format(css_style, md_text)
     with codecs.open(output_file, 'w', 'utf-8') as outfile:
         outfile.write(html)
 
